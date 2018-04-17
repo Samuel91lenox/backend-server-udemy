@@ -1,27 +1,28 @@
 var express = require('express');
-var app = express();
 var fs = require('fs');
 
+var app = express();
 
-app.get('/:tipo/:img', (request, response, next) => {
 
-    var tipo = request.params.tipo;
-    var img = request.params.img;
+app.get('/:tipo/:img', (req, res, next) => {
 
-    var path = `./uploads/${tipo}/${img}`;
+    var tipo = req.params.tipo;
+    var img = req.params.img;
+
+    var path = `./uploads/${ tipo }/${ img }`;
 
     fs.exists(path, existe => {
+
         if (!existe) {
-            path = './assests/no-img.jpg';
+            path = './assets/no-img.jpg';
         }
 
-        response.sendfile(path);
+
+        res.sendfile(path);
+
     });
 
-    // response.status(404).json({
-    //     ok: true,
-    //     mensaje: 'Peticion realizada correctamente'
-    // });
+
 });
 
 module.exports = app;
